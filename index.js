@@ -1,38 +1,46 @@
 let currentPattern = [];
 let buttonColours = ["red", "blue", "green", "yellow"];
 let userClickedPattern = [];
+let hasStarted = false;
 
-$(document).keypress(function(){
-    function nextSequence() {
-        let randomColourIndex = Math.floor(Math.random() * buttonColours.length);
-        let randomColour = buttonColours[randomColourIndex];
-        currentPattern.push(randomColour);
+function nextSequence() {
+    let randomColourIndex = Math.floor(Math.random() * buttonColours.length);
+    let randomColour = buttonColours[randomColourIndex];
+    currentPattern.push(randomColour);
 
-        buttonAnimation(randomColour)
-        playSound(randomColour);
-    }
+    buttonAnimation(randomColour)
+    playSound(randomColour);
+}
 
-    $(".btn").on("click", function(){;
+function userInteraction() {
+    $(".btn").on("click", function(){
         let userChosenColour = $(this).attr("id");
-        userClickedPattern.push("#" + userChosenColour);
+        userClickedPattern.push(userChosenColour);
 
         buttonAnimation(userChosenColour);
         playSound(userChosenColour);
     });
+}
 
-    function playSound(button) {
-        new Audio("sounds/" + button + ".mp3").play();
+function playSound(button) {
+    new Audio("sounds/" + button + ".mp3").play();
+}
+
+function buttonAnimation(button) {
+    let clickedButton = $("#" + button);
+    clickedButton.addClass("pressed");
+    clickedButton.fadeOut(100).fadeIn(100);
+
+    setTimeout(function(){
+        clickedButton.removeClass("pressed");
+    }, 150);
+}
+
+$(document).keypress(function(){
+    if (hasStarted === false) {
+        nextSequence();
+        hasStarted = true;
     }
 
-    function buttonAnimation(button) {
-        let clickedButton = $("#" + button);
-        clickedButton.fadeOut(100).fadeIn(100);
-        clickedButton.addClass("pressed");
-
-        setTimeout(function(){
-            clickedButton.removeClass("pressed");
-        }, 150);
-    }
-
-    nextSequence();
+    userInteraction();
 });
