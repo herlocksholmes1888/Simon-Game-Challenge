@@ -2,8 +2,12 @@ let currentPattern = [];
 let buttonColours = ["red", "blue", "green", "yellow"];
 let userClickedPattern = [];
 let hasStarted = false;
+let level = 0;
 
 function nextSequence() {
+    level += 1;
+    $("#level-title").html("Level " + level);
+
     let randomColourIndex = Math.floor(Math.random() * buttonColours.length);
     let randomColour = buttonColours[randomColourIndex];
     currentPattern.push(randomColour);
