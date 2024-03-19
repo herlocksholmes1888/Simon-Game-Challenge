@@ -15,8 +15,6 @@ $(document).keypress(function(){
         let randomColourIndex = Math.floor(Math.random() * buttonColours.length);
         let randomColour = buttonColours[randomColourIndex];
         currentPattern.push(randomColour);
-
-        console.log(currentPattern);
     
         buttonAnimation(randomColour)
         playSound(randomColour);
@@ -26,8 +24,6 @@ $(document).keypress(function(){
         $(".btn").on("click", function(){
             let userChosenColour = $(this).attr("id");
             userClickedPattern.push(userChosenColour);
-
-            console.log(userClickedPattern);
     
             buttonAnimation(userChosenColour);
             playSound(userChosenColour);
@@ -37,18 +33,22 @@ $(document).keypress(function(){
     }
 
     function checkAnswer() {
-        if (userClickedPattern.length === currentPattern.length){
-            if (JSON.stringify(currentPattern) === JSON.stringify(userClickedPattern)) {
-                console.log("Success!");
-    
-                if (userClickedPattern.length === currentPattern.length) {
-                    setTimeout(function(){
-                        nextSequence();
-                    }, 1500);
-                }
+        /* if (JSON.stringify(currentPattern) === JSON.stringify(userClickedPattern)) {
+            if (userClickedPattern.length === currentPattern.length) {
+                setTimeout(function(){
+                    nextSequence();
+                }, 1000);
             }
-            else {
-                console.log("Failure!");
+        }*/
+
+        var lastIndex = userClickedPattern.length - 1;
+        if (userClickedPattern[lastIndex] !== currentPattern[lastIndex]) {
+                new Audio("sounds/wrong.mp3").play();
+        } else {
+            if (userClickedPattern.length === currentPattern.length) {
+                setTimeout(function(){
+                    nextSequence();
+                }, 1000);
             }
         }
     }
