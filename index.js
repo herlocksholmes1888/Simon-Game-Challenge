@@ -24,11 +24,12 @@ $(document).keypress(function(){
         $(".btn").on("click", function(){
             let userChosenColour = $(this).attr("id");
             userClickedPattern.push(userChosenColour);
+
+            if (checkAnswer() === true) {
+                playSound(userChosenColour);
+            }
     
             buttonAnimation(userChosenColour);
-            playSound(userChosenColour);
-
-            checkAnswer();
         });
     }
 
@@ -44,12 +45,14 @@ $(document).keypress(function(){
         var lastIndex = userClickedPattern.length - 1;
         if (userClickedPattern[lastIndex] !== currentPattern[lastIndex]) {
                 new Audio("sounds/wrong.mp3").play();
+                return false;
         } else {
             if (userClickedPattern.length === currentPattern.length) {
                 setTimeout(function(){
                     nextSequence();
                 }, 1000);
             }
+            return true;
         }
     }
 
