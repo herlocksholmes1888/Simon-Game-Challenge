@@ -7,10 +7,9 @@ let level = 0;
 $(document).keypress(function(){
     function nextSequence() {
         level += 1;
-        $("#level-title").html("Level " + level);
-
-        // Reset userClickedPattern each new sequence
         userClickedPattern = [];
+
+        $("#level-title").html("Level " + level);
     
         let randomColourIndex = Math.floor(Math.random() * buttonColours.length);
         let randomColour = buttonColours[randomColourIndex];
@@ -25,7 +24,7 @@ $(document).keypress(function(){
             let userChosenColour = $(this).attr("id");
             userClickedPattern.push(userChosenColour);
 
-            if (checkAnswer() === true) {
+            if (checkAnswer()) {
                 playSound(userChosenColour);
             }
     
@@ -40,17 +39,28 @@ $(document).keypress(function(){
                     nextSequence();
                 }, 1000);
             }
-        }*/
+        } */
 
+        // Compare the last button clicked by the user to the last button chosen randomly
         var lastIndex = userClickedPattern.length - 1;
         if (userClickedPattern[lastIndex] !== currentPattern[lastIndex]) {
+                $("#level-title").html("Game Over");
                 new Audio("sounds/wrong.mp3").play();
+
+                var body = $("body");
+                body.addClass("game-over");
+                body.fadeIn(100).fadeOut(100);
+                setTimeout(function(){
+                    body.fadeIn(100);
+                    body.removeClass("game-over");
+                }, 150);
+
                 return false;
         } else {
             if (userClickedPattern.length === currentPattern.length) {
                 setTimeout(function(){
                     nextSequence();
-                }, 1000);
+                }, 1200);
             }
             return true;
         }
