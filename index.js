@@ -5,6 +5,15 @@ var hasStarted = false;
 var level = 0;
 
 $(document).keypress(function(){
+
+    // Checks whether or not the user has interacted with the game
+    if (hasStarted === false) {
+        hasStarted = true;
+        nextSequence();
+        userInteraction();
+    }
+
+    // Associates a randomly generated number to a colour 
     function nextSequence() {
         level += 1;
         userClickedPattern = [];
@@ -19,12 +28,13 @@ $(document).keypress(function(){
         playSound(randomColour);
     }
     
+    // Checks which button the user has clicked
     function userInteraction() {
         $(".btn").on("click", function(){
             let userChosenColour = $(this).attr("id");
             userClickedPattern.push(userChosenColour);
 
-            if (checkAnswer()) {
+            if (checkAnswer() === true) {
                 playSound(userChosenColour);
             }
     
@@ -32,6 +42,7 @@ $(document).keypress(function(){
         });
     }
 
+    // Verifies whether or not the user has clicked the correct colour in the sequence
     function checkAnswer() {
         /* if (JSON.stringify(currentPattern) === JSON.stringify(userClickedPattern)) {
             if (userClickedPattern.length === currentPattern.length) {
@@ -41,10 +52,11 @@ $(document).keypress(function(){
             }
         } */
 
-        // Compare the last button clicked by the user to the last button chosen randomly
+        // Compares the last button clicked by the user to the last button chosen randomly
         let lastIndex = userClickedPattern.length - 1;
         if (userClickedPattern[lastIndex] !== currentPattern[lastIndex]) {
                 $("#level-title").html("Game Over, Press Any Key to Restart");
+
                 new Audio("sounds/wrong.mp3").play();
 
                 let body = $("body");
@@ -55,8 +67,8 @@ $(document).keypress(function(){
                 }, 150);
 
                 startOver();
-                return false;
 
+                return false;
         } else {
             if (userClickedPattern.length === currentPattern.length) {
                 setTimeout(function(){
@@ -68,16 +80,20 @@ $(document).keypress(function(){
         }
     }
 
+    // Resets the values of the previous game
     function startOver() {
         level = 0; 
         currentPattern = [];
         hasStarted = false;
+        $(".btn").off("click");
     }
 
+    // Success sound effects
     function playSound(button) {
         new Audio("sounds/" + button + ".mp3").play();
     }
     
+    // Flashes whenever a button is selected
     function buttonAnimation(button) {
         let clickedButton = $("#" + button);
         clickedButton.addClass("pressed");
@@ -87,10 +103,4 @@ $(document).keypress(function(){
             clickedButton.removeClass("pressed");
         }, 150);
     }
-
-    if (hasStarted === false) {
-        nextSequence();
-        hasStarted = true;
-    }
-    userInteraction();
 });
