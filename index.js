@@ -1,8 +1,8 @@
-let currentPattern = [];
-let buttonColours = ["red", "blue", "green", "yellow"];
-let userClickedPattern = [];
-let hasStarted = false;
-let level = 0;
+var currentPattern = [];
+var buttonColours = ["red", "blue", "green", "yellow"];
+var userClickedPattern = [];
+var hasStarted = false;
+var level = 0;
 
 $(document).keypress(function(){
     function nextSequence() {
@@ -42,28 +42,36 @@ $(document).keypress(function(){
         } */
 
         // Compare the last button clicked by the user to the last button chosen randomly
-        var lastIndex = userClickedPattern.length - 1;
+        let lastIndex = userClickedPattern.length - 1;
         if (userClickedPattern[lastIndex] !== currentPattern[lastIndex]) {
-                $("#level-title").html("Game Over");
+                $("#level-title").html("Game Over, Press Any Key to Restart");
                 new Audio("sounds/wrong.mp3").play();
 
-                var body = $("body");
+                let body = $("body");
                 body.addClass("game-over");
-                body.fadeIn(100).fadeOut(100);
+                body.fadeIn(100).fadeOut(100).fadeIn(100);
                 setTimeout(function(){
-                    body.fadeIn(100);
                     body.removeClass("game-over");
                 }, 150);
 
+                startOver();
                 return false;
+
         } else {
             if (userClickedPattern.length === currentPattern.length) {
                 setTimeout(function(){
                     nextSequence();
                 }, 1200);
             }
+            
             return true;
         }
+    }
+
+    function startOver() {
+        level = 0; 
+        currentPattern = [];
+        hasStarted = false;
     }
 
     function playSound(button) {
