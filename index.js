@@ -9,6 +9,7 @@ $(document).keypress(function(){
     // Checks whether or not the user has interacted with the game
     if (hasStarted === false) {
         hasStarted = true;
+        $("#subtitle").html("");
         nextSequence();
         userInteraction();
     }
@@ -55,7 +56,8 @@ $(document).keypress(function(){
         // Compares the last button clicked by the user to the last button chosen randomly
         let lastIndex = userClickedPattern.length - 1;
         if (userClickedPattern[lastIndex] !== currentPattern[lastIndex]) {
-                $("#level-title").html("Game Over, Press Any Key to Restart");
+                $("#level-title").html("Game Over");
+                $("#subtitle").html("Press Any Key to Restart");
 
                 new Audio("sounds/wrong.mp3").play();
 
