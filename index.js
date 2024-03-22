@@ -107,5 +107,8 @@ function simonGame(){
     }
 }
 
-$(document).keypress(simonGame);
-$(document).tap(simonGame);
+$(document).ready(function(){
+    $(document).on("keypress touchstart", function(){
+        simonGame();
+    });
+});
