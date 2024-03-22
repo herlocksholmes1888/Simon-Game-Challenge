@@ -4,8 +4,7 @@ var userClickedPattern = [];
 var hasStarted = false;
 var level = 0;
 
-$(document).keypress(function(){
-
+function simonGame(){
     // Checks whether or not the user has interacted with the game
     if (hasStarted === false) {
         hasStarted = true;
@@ -31,7 +30,7 @@ $(document).keypress(function(){
     
     // Checks which button the user has clicked
     function userInteraction() {
-        $(".btn").on("click", function(){
+        $(".btn").on("click touchstart", function(){
             let userChosenColour = $(this).attr("id");
             userClickedPattern.push(userChosenColour);
 
@@ -87,7 +86,7 @@ $(document).keypress(function(){
         level = 0; 
         currentPattern = [];
         hasStarted = false;
-        $(".btn").off("click");
+        $(".btn").off("click touchstart");
     }
 
     // Success sound effects
@@ -105,4 +104,7 @@ $(document).keypress(function(){
             clickedButton.removeClass("pressed");
         }, 150);
     }
-});
+}
+
+$(document).keypress(simonGame);
+$(document).on("touchstart", simonGame);
