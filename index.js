@@ -108,4 +108,4 @@ function simonGame(){
 }
 
 $(document).keypress(simonGame);
-$(document).on("touchstart", simonGame);
+$(document).tap(simonGame);
