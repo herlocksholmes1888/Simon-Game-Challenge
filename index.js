@@ -87,6 +87,7 @@ function simonGame(){
         currentPattern = [];
         hasStarted = false;
         $(".btn").off("click touchstart");
+        $(document).off("touchstart");
     }
 
     // Success sound effects
