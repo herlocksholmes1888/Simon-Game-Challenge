@@ -30,7 +30,7 @@ function simonGame(){
     
     // Checks which button the user has clicked
     function userInteraction() {
-        $(".btn").on("click touchstart", function(){
+        $(".btn").on("click", function(){
             let userChosenColour = $(this).attr("id");
             userClickedPattern.push(userChosenColour);
 
@@ -86,8 +86,7 @@ function simonGame(){
         level = 0; 
         currentPattern = [];
         hasStarted = false;
-        $(".btn").off("click touchstart");
-        $(document).off("touchstart");
+        $(".btn").off("click");
     }
 
     // Success sound effects
