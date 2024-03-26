@@ -103,7 +103,7 @@ function simonGame(){
         setTimeout(function(){
             clickedButton.removeClass("pressed");
         }, 150);
-    }
+    } 
 }
 
 $(document).ready(function(){
