@@ -17,15 +17,24 @@ function simonGame(){
     function nextSequence() {
         level += 1;
         userClickedPattern = [];
-
         $("#level-title").html("Level " + level);
+
+        // After playing the current pattern, add a new color
+        setTimeout(function() {
+                let randomColourIndex = Math.floor(Math.random() * buttonColours.length);
+                let randomColour = buttonColours[randomColourIndex];
+                currentPattern.push(randomColour);
+                buttonAnimation(randomColour);
+                playSound(randomColour);
+        }, 600 * currentPattern.length); // Adjust timing as needed
     
-        let randomColourIndex = Math.floor(Math.random() * buttonColours.length);
-        let randomColour = buttonColours[randomColourIndex];
-        currentPattern.push(randomColour);
-    
-        buttonAnimation(randomColour)
-        playSound(randomColour);
+        // Loops through the current pattern to play each color
+        for (let i = 0; i < currentPattern.length; i++) {
+            setTimeout(function() {
+                buttonAnimation(currentPattern[i]);
+                playSound(currentPattern[i]);
+            }, 600 * i); // Adjust timing as needed for button animations and sound duration
+        }
     }
     
     // Checks which button the user has clicked
